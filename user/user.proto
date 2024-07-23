@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package="../user";
+
+message UserLoginRequest {
+  string mobile = 1;
+  string password = 2;
+}
+
+message UserLoginHelloReply {
+  string mobile = 1;
+  string password = 2;
+}
+
+//stream请求结构
+message StreamReqData {
+  string data = 1;
+}
+//stream返回结构
+message StreamResData {
+  string data = 1;
+}
+service StreamGreeter {
+  rpc userLogin(UserLoginRequest) returns (UserLoginHelloReply); //普通
+  rpc GetStream(StreamReqData) returns (stream StreamResData); // 服务端 单向流
+  rpc PusStream(stream StreamReqData) returns (StreamResData); // 客户端 单向流
+  rpc AllStream(stream StreamReqData) returns (stream StreamResData); //双向流
+}
